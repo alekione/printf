@@ -4,6 +4,8 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
+void print_char(char);
 
 /**
  * print_num - print numbers to stdout
@@ -17,33 +19,41 @@ void print_num(int num, char *str, bool first, int counter)
 	char chr, *str2;
 	size_t i;
 
-	if (num < 10)
+	if (num < 0)
+		print_char('-');
+	num = abs(num);
+	while (num != 0)
 	{
-		chr = num + '0';
-		write(1, &chr, 1);
-		if (!(first))
+		if (num < 10)
 		{
-			i = strlen(str); 
-			while (i > 0) {i--; write(i, &str[i], 1);}
-		}
-	}
-	else
-	{
-		chr = (num % 10) + '0';
-		if (first)
-		{
-			*(str) = chr;
-			first = false;
+			chr = num + '0';
+			print_char(chr);
+			if (!(first))
+			{
+				for (i = strlen(str); i > 0; --i)
+					print_char(str[i - 1]);
+			}
+			break;
 		}
 		else
 		{
-			str2 = (char *)realloc(str, counter);
-			if (str2 == NULL)
-				return;
-			*(str2 + (counter - 1)) = chr;
-			str = str2;
+			chr = (num % 10) + '0';
+			if (first)
+			{
+				*(str + 0) = chr;
+				first = false;
+			}
+			else
+			{
+				str2 = (char *)realloc(str, counter);
+				if (str2 == NULL)
+					return;
+				*(str2 + (counter - 1)) = chr;
+				str = str2;
+			}
+			counter++;
+			num /= 10;
 		}
-		print_num(num / 10, str, first, counter + 1);
 	}
 }
 
@@ -58,9 +68,18 @@ void print_str(char *str)
 	i = 0, j = strlen(str);
 	while (i < j)
 	{
-		write(1, &str[i], 1);
+		print_char(str[i]);
 		i++;
 	}
+}
+
+/**
+ * print_char - print a character to the stdout
+ * @s: character to print
+ */
+void print_char(char s)
+{
+	write(1, &s, 1);
 }
 
 /**
@@ -70,32 +89,37 @@ void print_str(char *str)
  */
 int _printf(const char *format, ...)
 {
-	size_t i = 0, j;
+	size_t i = 0;
 	va_list lst;
-	char chr, next_char, *ptr;
+	char next_char, *char_s, *ptr, *s = "csdi%";
 
-	if (format == NULL || strlen(format) == 0) return(EXIT_SUCCESS);
+	if (format == NULL || strlen(format) == 0)
+		return (EXIT_SUCCESS);
 	va_start(lst, format);
 	ptr = (char *)malloc(sizeof(char));
 	while (i < strlen(format))
 	{
-		j = i;
 		if (format[i] == '%')
 		{
 			next_char = format[i + 1];
-			if (next_char == 'c')
+			char_s = strchr(s, next_char);
+			if (char_s != NULL)
 			{
-				chr = va_arg(lst, int);
-				write(1, &chr, 1);
+				if (next_char == 'c')
+					print_char(va_arg(lst, int));
+				if (next_char == 's')
+					print_str(va_arg(lst, char *));
+				if (next_char == 'd')
+					print_num(va_arg(lst, int), ptr, true, 1);
+				if (next_char == 'i')
+					print_num(va_arg(lst, int), ptr, true, 1);
+				if (next_char == '%')
+					print_char(next_char);
 				i += 2;
+				continue;
 			}
-			if (next_char == 's') {print_str(va_arg(lst, char *)); i += 2;}
-			if (next_char == 'd') {print_num(va_arg(lst, int), ptr, true, 1); i += 2;}
-			if (next_char == 'i') {print_num(va_arg(lst, int), ptr, true, 1); i += 2;}
-			if (next_char == '%') {write(1, &next_char, 1); i+= 2;}
-			if (i != j) continue;
 		}
-		write(1, &format[i], 1);
+		print_char(format[i]);
 		i++;
 	}
 	va_end(lst);
