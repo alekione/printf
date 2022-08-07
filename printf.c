@@ -61,5 +61,5 @@ int _printf(const char *format, ...)
 		count = print_char(format[i], count);
 		i++;
 	}
-	return (count - 1);
+	return (count);
 }
