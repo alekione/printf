@@ -61,5 +61,6 @@ int _printf(const char *format, ...)
 		count = print_char(format[i], count);
 		i++;
 	}
+	print_char('\n', count);
 	return (count);
 }
