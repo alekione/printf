@@ -46,6 +46,8 @@ int print_num(int num, int count)
 	int i = 0, len;
 	char last, *ptr2, *ptr = (char *)malloc(sizeof(char));
 
+	if (num == 0)
+		return (print_char('0', count));
 	if (num < 0)
 		count = print_char('-', count);
 	num = abs(num);
@@ -66,6 +68,7 @@ int print_num(int num, int count)
 	len = strlen(ptr);
 	for (i = len; i > 0; i--)
 		count = print_char(ptr[i - 1], count);
+	free(ptr);
 	return (count);
 }
 /**
@@ -80,7 +83,7 @@ int _printf(const char *format, ...)
 	char next_char;
 
 	va_start(lst, format);
-	if (strlen(format) == 0 || format == NULL)
+	if (format == NULL || strlen(format) == 0)
 		return (count);
 	while (format && format[i])
 	{
