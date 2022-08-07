@@ -55,11 +55,6 @@ int _printf(const char *format, ...)
 				count = print_string(va_arg(lst, char *), count);
 			if (next_char == '%')
 				count = print_char('%', count);
-			else
-			{
-				count = print_char(format[i], count);
-				count = print_char(next_char, count);
-			}
 			i += 2;
 			continue;
 		}
