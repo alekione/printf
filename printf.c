@@ -23,8 +23,11 @@ int print_char(char c, int count)
  */
 int print_string(char *str, int count)
 {
-	int j, i = strlen(str);
+	int j, i;
 
+	if (str == NULL || strlen(str) == 0)
+		return (count);
+	i = strlen(str);
 	for (j = 0; j < i; j++)
 		count = print_char(str[j], count);
 	return (count);
@@ -41,9 +44,9 @@ int _printf(const char *format, ...)
 	int i = 0, count = 0;
 	char next_char;
 
-	if (format == NULL || strlen(format) == 0)
-		return (count);
 	va_start(lst, format);
+	if (strlen(format) == 0 || format == NULL)
+		return (count);
 	while (format && format[i])
 	{
 		if (format[i] == '%')
@@ -61,5 +64,6 @@ int _printf(const char *format, ...)
 		count = print_char(format[i], count);
 		i++;
 	}
+	va_end(lst);
 	return (count);
 }
