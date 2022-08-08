@@ -3,7 +3,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 /**
  * print_char - print a character to stdout
@@ -44,7 +43,7 @@ int print_string(char *str, int count)
 int print_num(int num, int count)
 {
 	int i = 0, len;
-	char last, *ptr2, *ptr = (char *)malloc(sizeof(char));
+	char last, *ptr2, *ptr = (void *)malloc(sizeof(char));
 
 	if (num == 0)
 		return (print_char('0', count));
@@ -58,16 +57,16 @@ int print_num(int num, int count)
 			*(ptr) = last;
 		else
 		{
-			ptr2 = (char *)realloc(ptr, i + 1);
+			ptr2 = realloc(ptr, i + 1);
 			*(ptr2 + i) = last;
 			ptr = ptr2;
 		}
 		num /= 10;
 		i++;
 	}
-	len = strlen(ptr);
-	for (i = len; i > 0; i--)
-		count = print_char(ptr[i - 1], count);
+
+	for (len = i; len > 0; len--)
+		count = print_char(ptr[len - 1], count);
 	free(ptr);
 	return (count);
 }
@@ -96,7 +95,7 @@ int _printf(const char *format, ...)
 				count = print_string(va_arg(lst, char *), count);
 			if (next_char == '%')
 				count = print_char('%', count);
-			if (next_char == 'd' || next_char == 'i')
+			if (next_char == 'i' || next_char == 'd')
 				count = print_num(va_arg(lst, int), count);
 			i += 2;
 			continue;
