@@ -78,13 +78,14 @@ int print_num(int num, int count)
 int _printf(const char *format, ...)
 {
 	va_list lst;
-	int i = 0, count = 0;
+	int i = 0, count = 0, len;
 	char next_char;
 
-	va_start(lst, format);
 	if (format == NULL || strlen(format) == 0)
 		return (count);
-	while (format && format[i])
+	va_start(lst, format);
+	len = strlen(format);
+	while (i < len)
 	{
 		if (format[i] == '%')
 		{
