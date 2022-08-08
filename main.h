@@ -10,4 +10,5 @@ int print_binary(unsigned int, int);
 int print_octal(unsigned int, int);
 int print_udecimal(unsigned int, int);
 int print_hex(unsigned int, char, int);
+int print_xstring(char *, int);
 #endif

@@ -137,3 +137,35 @@ int print_hex(unsigned int num, char identifier, int count)
 		count = print_char(ptr[j - 1], count);
 	return (count);
 }
+
+/**
+ * print_xstring - print a string
+ * @str: string to print
+ * @count: to keep record of chars printed
+ * Return: printed chars
+ */
+int print_xstring(char *str, int count)
+{
+	char chr;
+	int i = 0, len;
+
+	if (str == NULL || strlen(str) == 0)
+		return (count);
+	len = strlen(str);
+	while (i < len)
+	{
+		chr = str[i];
+		if (chr < 32 || chr > 126)
+		{
+			count = print_char(92, count);
+			count = print_char('x', count);
+			if (chr < 16)
+				count = print_char('0', count);
+			count = print_hex((unsigned int)chr, 'X', count);
+			i++;
+		}
+		count = print_char(str[i], count);
+		i++;
+	}
+	return (count);
+}
