@@ -9,7 +9,7 @@
  * @count: to keep count of char printed
  * Return: count of chars printed
  */
-int print_binary(unsigned long int num, int count)
+int print_binary(unsigned int num, int count)
 {
 	char chr, *ptr2, *ptr = (char *)malloc(sizeof(char));
 	int i = 0, j;

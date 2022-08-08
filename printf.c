@@ -119,6 +119,6 @@ int _printf(const char *format, ...)
 int continue_printf(char next_char, va_list lst, int count)
 {
 	if (next_char == 'b')
-		count = print_binary(va_arg(lst, unsigned long int), count);
+		count = print_binary(va_arg(lst, unsigned int), count);
 	return (count);
 }
