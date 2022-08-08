@@ -6,5 +6,8 @@ int continue_printf(char, va_list, int);
 int print_char(char, int);
 int print_string(char *, int);
 int print_num(int, int);
-int print_binary(unsigned int, int count);
+int print_binary(unsigned int, int);
+int print_octal(unsigned int, int);
+int print_udecimal(unsigned int, int);
+int print_hex(unsigned int, char, int);
 #endif

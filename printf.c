@@ -120,5 +120,11 @@ int continue_printf(char next_char, va_list lst, int count)
 {
 	if (next_char == 'b')
 		count = print_binary(va_arg(lst, unsigned int), count);
+	if (next_char == 'o')
+		count = print_octal(va_arg(lst, unsigned int), count);
+	if (next_char == 'u')
+		count = print_udecimal(va_arg(lst, unsigned int), count);
+	if (next_char == 'x' || next_char == 'X')
+		count = print_hex(va_arg(lst, unsigned int), next_char, count);
 	return (count);
 }
