@@ -97,6 +97,8 @@ int _printf(const char *format, ...)
 				count = print_char('%', count);
 			if (next_char == 'i' || next_char == 'd')
 				count = print_num(va_arg(lst, int), count);
+			else
+				count = continue_printf(next_char, lst, count);
 			i += 2;
 			continue;
 		}
@@ -104,5 +106,19 @@ int _printf(const char *format, ...)
 		i++;
 	}
 	va_end(lst);
+	return (count);
+}
+
+/**
+ * continue_printf - continue the other _printf function
+ * @next_char: conversion specifier
+ * @lst: argument list
+ * @count: to keep counter of char printed to stdout
+ * Return: sum of char printed
+ */
+int continue_printf(char next_char, va_list lst, int count)
+{
+	if (next_char == 'b')
+		count = print_binary(va_arg(lst, unsigned int), count);
 	return (count);
 }
