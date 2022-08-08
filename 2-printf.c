@@ -15,7 +15,9 @@ int print_binary(unsigned int num, int count)
 	int i = 0, j;
 
 	if (num == 0)
-		count = print_char('0', count);
+		return (print_char('0', count));
+	if (num == 1)
+		return (print_char('1', count));
 	while (num > 0)
 	{
 		chr = (num % 2) + '0';
