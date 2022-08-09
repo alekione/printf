@@ -87,12 +87,6 @@ int _printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			next_char = format[i + 1];
-			if (next_char == 'c')
-				count += print_char(va_arg(lst, int));
-			if (next_char == 's')
-				count += print_string(va_arg(lst, char *));
-			if (next_char == '%')
-				count += print_char('%');
 			if (next_char == '+' || next_char == ' ')
 				count += print_sign(lst, next_char, format[i + 2]);
 			if (next_char == '#')
@@ -121,6 +115,12 @@ int continue_printf(char next_char, va_list lst)
 {
 	int count = 0;
 
+	if (next_char == 'c')
+		count += print_char(va_arg(lst, int));
+	if (next_char == 's')
+		count += print_string(va_arg(lst, char *));
+	if (next_char == '%')
+		count += print_char('%');
 	if (next_char == 'i' || next_char == 'd')
 		count += print_num(va_arg(lst, int));
 	if (next_char == 'b')

@@ -47,6 +47,8 @@ int print_octal(unsigned int num)
 	int rem, count = 0, i = 0, j;
 	char *ptr2, *ptr = (char *)malloc(sizeof(char));
 
+	if (num == 0)
+		count += print_char('0');
 	while (num != 0)
 	{
 		rem = num % 8;
@@ -111,6 +113,8 @@ int print_hex(unsigned int num, char identifier)
 	char *ptr2, *ptr = (char *)malloc(3 * sizeof(char));
 
 	identifier == 'x' ? (start = 97) : (start = 65);
+	if (num == 0)
+		count += print_char('0');
 	while (num != 0)
 	{
 		rem = num % 16;

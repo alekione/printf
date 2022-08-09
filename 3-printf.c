@@ -38,6 +38,8 @@ int print_with_hash(va_list lst, char next_char)
 	unsigned int num = va_arg(lst, unsigned int);
 	int count = 0;
 
+	if (num == 0)
+		return(print_char('0'));
 	if (next_char == 'o')
 	{
 		count += print_char('0');
