@@ -94,9 +94,9 @@ int _printf(const char *format, ...)
 			if (next_char == '#')
 				count += print_with_hash(lst, format[i + 2]);
 			if (next_char == 'l')
-				count += print_num(va_arg(lst, long int));
+				count += print_long(va_arg(lst, long int), format[i + 2]);
 			if (next_char == 'h')
-				count += print_short(va_arg(lst, int));
+				count += print_short(va_arg(lst, int), format[i + 2]);
 			else
 				count += continue_printf(next_char, lst);
 			if (next_char == '+' || next_char == '#' || next_char == ' ' ||

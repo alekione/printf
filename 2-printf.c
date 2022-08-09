@@ -4,6 +4,23 @@
 #include <limits.h>
 
 /**
+ * print_long - print a modified long int
+ * @num: number to modify
+ * @char: next char
+ * Return: number of printed char
+ */
+int print_long(long int num, char chr)
+{
+	if (chr == 'd' || chr == 'i' || chr == 'u')
+		return (print_num(num));
+	if (chr == 'o')
+		return (print_octal(num));
+	if (chr == 'x' || chr == 'X')
+		return (print_hex(num, chr));
+	return (0);
+}
+
+/**
  * print_binary - print binary code of a number
  * @num: num to convert
  * Return: count of chars printed

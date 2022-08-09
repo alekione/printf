@@ -62,9 +62,15 @@ int print_with_hash(va_list lst, char next_char)
  * @num: num to print
  * Return: counter to char printed
  */
-int print_short(int num)
+int print_short(int num, char chr)
 {
 	if (num > SHRT_MAX || num < SHRT_MIN)
 		return(0);
-	return (print_num(num));
+	if (chr == 'd' || chr == 'i' || chr == 'u')
+		return (print_num(num));
+	if (chr == 'o')
+		return (print_octal(num));
+	if (chr == 'x' || chr == 'X')
+		return(print_hex(num, chr));
+	return (0);
 }
