@@ -76,7 +76,7 @@ int print_octal(unsigned int num)
 int print_int(long int num)
 {
 	if (num > INT_MAX || num < INT_MIN)
-		exit(1);
+		return(0);
 	return(print_num(num));
 }
 

@@ -65,6 +65,6 @@ int print_with_hash(va_list lst, char next_char)
 int print_short(int num)
 {
 	if (num > SHRT_MAX || num < SHRT_MIN)
-		exit(1);
+		return(0);
 	return (print_num(num));
 }
