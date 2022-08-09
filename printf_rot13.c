@@ -4,13 +4,12 @@
 /**
  * printf_rot13 - print string to rot13
  * @args: type struct
- * @count: rcord of char(s) printed from the main
  *
  * Return: counter.
  */
-int printf_rot13(va_list args, int count)
+int printf_rot13(va_list args)
 {
-	int l, m, n, slen, alen;
+	int l, m, n, count = 0, slen, alen;
 
 	char *s = va_arg(args, char *);
 
@@ -28,12 +27,12 @@ int printf_rot13(va_list args, int count)
 		{
 			if (s[l] == alpha[m])
 			{
-				count = print_char(beta[m], count);
+				count += print_char(beta[m]);
 				n = 1;
 			}
 		}
 		if (n == 0)
-			count = print_char(s[l], count);
+			count += print_char(s[l]);
 	}
 	return (count);
 }

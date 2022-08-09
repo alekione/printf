@@ -7,48 +7,45 @@
 /**
  * print_char - print a character to stdout
  * @c: character to print
- * @count: int to keep counter of char printed
  * Return: char printed
  */
-int print_char(char c, int count)
+int print_char(char c)
 {
 	write(1, &c, 1);
-	return (count + 1);
+	return (1);
 }
 
 /**
  * print_string - print a string to stdout
  * @str: string to print
- * @count: to keep counter of char printed
  * Return: char printed
  */
-int print_string(char *str, int count)
+int print_string(char *str)
 {
-	int j, i;
+	int j, i, count = 0;
 
 	if (str == NULL || strlen(str) == 0)
 		return (count);
 	i = strlen(str);
 	for (j = 0; j < i; j++)
-		count = print_char(str[j], count);
+		count += print_char(str[j]);
 	return (count);
 }
 
 /**
  * print_num - print numbers
  * @num: number to print
- * @count: int val to keep counter of numbers printed
  * Return: count
  */
-int print_num(int num, int count)
+int print_num(int num)
 {
-	int i = 0, len;
+	int i = 0, len, count = 0;
 	char last, *ptr2, *ptr = (void *)malloc(sizeof(char));
 
 	if (num == 0)
-		return (print_char('0', count));
+		return (print_char('0') + count);
 	if (num < 0)
-		count = print_char('-', count);
+		count += print_char('-');
 	num = abs(num);
 	while (num != 0)
 	{
@@ -66,7 +63,7 @@ int print_num(int num, int count)
 	}
 
 	for (len = i; len > 0; len--)
-		count = print_char(ptr[len - 1], count);
+		count += print_char(ptr[len - 1]);
 	free(ptr);
 	return (count);
 }
@@ -91,19 +88,23 @@ int _printf(const char *format, ...)
 		{
 			next_char = format[i + 1];
 			if (next_char == 'c')
-				count = print_char(va_arg(lst, int), count);
+				count += print_char(va_arg(lst, int));
 			if (next_char == 's')
-				count = print_string(va_arg(lst, char *), count);
+				count += print_string(va_arg(lst, char *));
 			if (next_char == '%')
-				count = print_char('%', count);
-			if (next_char == 'i' || next_char == 'd')
-				count = print_num(va_arg(lst, int), count);
+				count += print_char('%');
+			if (next_char == '+')
+				count += print_positive(lst, format[i + 2]);
+			if (next_char == '#')
+				count += print_with_hash(lst, format[i + 2]);
 			else
-				count = continue_printf(next_char, lst, count);
+				count += continue_printf(next_char, lst);
+			if (next_char == '+')
+				i++;
 			i += 2;
 			continue;
 		}
-		count = print_char(format[i], count);
+		count += print_char(format[i]);
 		i++;
 	}
 	va_end(lst);
@@ -114,22 +115,25 @@ int _printf(const char *format, ...)
  * continue_printf - continue the other _printf function
  * @next_char: conversion specifier
  * @lst: argument list
- * @count: to keep counter of char printed to stdout
  * Return: sum of char printed
  */
-int continue_printf(char next_char, va_list lst, int count)
+int continue_printf(char next_char, va_list lst)
 {
+	int count = 0;
+
+	if (next_char == 'i' || next_char == 'd')
+		count += print_num(va_arg(lst, int));
 	if (next_char == 'b')
-		count = print_binary(va_arg(lst, unsigned int), count);
+		count += print_binary(va_arg(lst, unsigned int));
 	if (next_char == 'o')
-		count = print_octal(va_arg(lst, unsigned int), count);
+		count += print_octal(va_arg(lst, unsigned int));
 	if (next_char == 'u')
-		count = print_udecimal(va_arg(lst, unsigned int), count);
+		count += print_udecimal(va_arg(lst, unsigned int));
 	if (next_char == 'x' || next_char == 'X')
-		count = print_hex(va_arg(lst, unsigned int), next_char, count);
+		count += print_hex(va_arg(lst, unsigned int), next_char);
 	if (next_char == 'S')
-		count = print_xstring(va_arg(lst, char *), count);
+		count += print_xstring(va_arg(lst, char *));
 	if (next_char == 'R')
-		count = printf_rot13(lst, count);
+		count += printf_rot13(lst);
 	return (count);
 }

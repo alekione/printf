@@ -6,18 +6,17 @@
 /**
  * print_binary - print binary code of a number
  * @num: num to convert
- * @count: to keep count of char printed
  * Return: count of chars printed
  */
-int print_binary(unsigned int num, int count)
+int print_binary(unsigned int num)
 {
 	char chr, *ptr2, *ptr = (char *)malloc(sizeof(char));
-	int i = 0, j;
+	int i = 0, j, count = 0;
 
 	if (num == 0)
-		return (print_char('0', count));
+		return (print_char('0') + count);
 	if (num == 1)
-		return (print_char('1', count));
+		return (print_char('1') + count);
 	while (num > 0)
 	{
 		chr = (num % 2) + '0';
@@ -33,7 +32,7 @@ int print_binary(unsigned int num, int count)
 		i++;
 	}
 	for (j = i; j > 0; j--)
-		count = print_char(ptr[j - 1], count);
+		count += print_char(ptr[j - 1]);
 	free(ptr);
 	return (count);
 }
@@ -41,36 +40,44 @@ int print_binary(unsigned int num, int count)
 /**
  * print_octal - print octal numbers of num
  * @num: number to convert
- * @count: counter to keep record of char printed
  * Return: counter of chars printed
  */
-int print_octal(unsigned int num, int count)
+int print_octal(unsigned int num)
 {
-	int octnum = 0, i = 1;
+	int rem, count = 0, i = 0, j;
+	char *ptr2, *ptr = (char *)malloc(sizeof(char));
 
 	while (num != 0)
 	{
-		octnum += (num % 8) * i;
+		rem = num % 8;
+		if (i == 0)
+			*(ptr) = rem + '0';
+		else
+		{
+			ptr2 = (char *)realloc(ptr, i + 1);
+			*(ptr2 + i) = rem + '0';
+			ptr = ptr2;
+		}
+		i++;
 		num /= 8;
-		i *= 10;
 	}
-	count = print_num(octnum, count);
+	for (j = i; j > 0; j--)
+		count += print_char(ptr[j - 1]);
 	return (count);
 }
 
 /**
  * print_udecimal - print numbers
  * @num: number to print
- * @count: int val to keep counter of numbers printed
  * Return: count
  */
-int print_udecimal(unsigned int num, int count)
+int print_udecimal(unsigned int num)
 {
-	int i = 0, len;
+	int i = 0, len, count = 0;
 	char last, *ptr2, *ptr = (void *)malloc(sizeof(char));
 
 	if (num < 10)
-		return (print_char(num + '0', count));
+		return (print_char(num + '0') + count);
 	while (num != 0)
 	{
 		last = (num % 10) + '0';
@@ -87,7 +94,7 @@ int print_udecimal(unsigned int num, int count)
 	}
 
 	for (len = i; len > 0; len--)
-		count = print_char(ptr[len - 1], count);
+		count += print_char(ptr[len - 1]);
 	free(ptr);
 	return (count);
 }
@@ -96,12 +103,11 @@ int print_udecimal(unsigned int num, int count)
  * print_hex - print a number in hexadecimal
  * @num: number to convert
  * @identifier: to decide between uppercase and lowercase
- * @count: counter to keep record of chars printed
  * Return: count of chars printed
  */
-int print_hex(unsigned int num, char identifier, int count)
+int print_hex(unsigned int num, char identifier)
 {
-	int i = 0, j, rem, start;
+	int i = 0, j, rem, start, count = 0;
 	char *ptr2, *ptr = (char *)malloc(3 * sizeof(char));
 
 	identifier == 'x' ? (start = 97) : (start = 65);
@@ -134,20 +140,19 @@ int print_hex(unsigned int num, char identifier, int count)
 		num /= 16;
 	}
 	for (j = i; j > 0; j--)
-		count = print_char(ptr[j - 1], count);
+		count += print_char(ptr[j - 1]);
 	return (count);
 }
 
 /**
  * print_xstring - print a string
  * @str: string to print
- * @count: to keep record of chars printed
  * Return: printed chars
  */
-int print_xstring(char *str, int count)
+int print_xstring(char *str)
 {
 	char chr;
-	int i = 0, len;
+	int i = 0, len, count = 0;
 
 	if (str == NULL || strlen(str) == 0)
 		return (count);
@@ -157,14 +162,14 @@ int print_xstring(char *str, int count)
 		chr = str[i];
 		if (chr < 32 || chr > 126)
 		{
-			count = print_char(92, count);
-			count = print_char('x', count);
+			count += print_char(92);
+			count += print_char('x');
 			if (chr < 16)
-				count = print_char('0', count);
-			count = print_hex((unsigned int)chr, 'X', count);
+				count += print_char('0');
+			count += print_hex((unsigned int)chr, 'X');
 			i++;
 		}
-		count = print_char(str[i], count);
+		count += print_char(str[i]);
 		i++;
 	}
 	return (count);
