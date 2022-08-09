@@ -69,18 +69,6 @@ int print_octal(unsigned int num)
 }
 
 /**
- * print_int - print intergers
- * @num: number to print
- * Return: count
- */
-int print_int(long int num)
-{
-	if (num > INT_MAX || num < INT_MIN)
-		return(0);
-	return(print_num(num));
-}
-
-/**
  * print_hex - print a number in hexadecimal
  * @num: number to convert
  * @identifier: to decide between uppercase and lowercase

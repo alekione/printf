@@ -129,7 +129,7 @@ int continue_printf(char next_char, va_list lst)
 	if (next_char == '%')
 		count += print_char('%');
 	if (next_char == 'i' || next_char == 'd')
-		count += print_int(va_arg(lst, long int));
+		count += print_num(va_arg(lst, int));
 	if (next_char == 'b')
 		count += print_binary(va_arg(lst, unsigned int));
 	if (next_char == 'o')
