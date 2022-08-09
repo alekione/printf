@@ -64,13 +64,14 @@ int print_with_hash(va_list lst, char next_char)
  */
 int print_short(int num, char chr)
 {
-	if (num > SHRT_MAX || num < SHRT_MIN)
-		return(0);
 	if (chr == 'd' || chr == 'i' || chr == 'u')
 		return (print_num(num));
 	if (chr == 'o')
 		return (print_octal(num));
 	if (chr == 'x' || chr == 'X')
 		return(print_hex(num, chr));
-	return (0);
+	print_char('%');
+	print_char('h');
+	print_char(chr);
+	return (3);
 }

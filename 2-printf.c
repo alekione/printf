@@ -17,6 +17,9 @@ int print_long(long int num, char chr)
 		return (print_octal(num));
 	if (chr == 'x' || chr == 'X')
 		return (print_hex(num, chr));
+	print_char('%');
+	print_char('l');
+	print_char(chr);
 	return (0);
 }
 
