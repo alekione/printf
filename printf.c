@@ -129,5 +129,7 @@ int continue_printf(char next_char, va_list lst, int count)
 		count = print_hex(va_arg(lst, unsigned int), next_char, count);
 	if (next_char == 'S')
 		count = print_xstring(va_arg(lst, char *), count);
+	if (next_char == 'R')
+		count = printf_rot13(lst, count);
 	return (count);
 }
