@@ -99,7 +99,7 @@ int _printf(const char *format, ...)
 				count += print_with_hash(lst, format[i + 2]);
 			else
 				count += continue_printf(next_char, lst);
-			if (next_char == '+')
+			if (next_char == '+' || next_char == '#')
 				i++;
 			i += 2;
 			continue;

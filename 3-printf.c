@@ -45,7 +45,8 @@ int print_with_hash(va_list lst, char next_char)
 	if (next_char == 'x' || next_char == 'X')
 	{
 		count += print_char('0');
-		count += print_char('x');
+		next_char == 'x' ? (print_char('x')) : (print_char('X'));
+		count++;
 		count+= print_hex(num, next_char);
 	}
 	return (count);
