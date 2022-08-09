@@ -93,13 +93,13 @@ int _printf(const char *format, ...)
 				count += print_string(va_arg(lst, char *));
 			if (next_char == '%')
 				count += print_char('%');
-			if (next_char == '+')
-				count += print_positive(lst, format[i + 2]);
+			if (next_char == '+' || next_char == ' ')
+				count += print_sign(lst, next_char, format[i + 2]);
 			if (next_char == '#')
 				count += print_with_hash(lst, format[i + 2]);
 			else
 				count += continue_printf(next_char, lst);
-			if (next_char == '+' || next_char == '#')
+			if (next_char == '+' || next_char == '#' || next_char == ' ')
 				i++;
 			i += 2;
 			continue;

@@ -2,12 +2,13 @@
 #include <stdarg.h>
 
 /**
- * print_positive - adds a positive sign to numbers
+ * print_sign - adds a positive sign to numbers
  * @lst: va_list arguments
  * @next_char: char to determine the type of numunber
+ * @sign: leading sign conversion
  * Return: char(s) printed upto this point
  */
-int print_positive(va_list lst, char next_char)
+int print_sign(va_list lst, char sign, char next_char)
 {
 	int num, count = 0;
 
@@ -15,12 +16,12 @@ int print_positive(va_list lst, char next_char)
 	{
 		num = va_arg(lst, int);
 		if (num > 0)
-			count += print_char('+');
+			count += print_char(sign);
 		count += print_num(num);
 	}
 	if (next_char == 'u')
 	{
-		count += print_char('+');
+		count += print_char(sign);
 		count += print_udecimal(va_arg(lst, unsigned int));
 	}
 	return (count);
@@ -36,7 +37,7 @@ int print_with_hash(va_list lst, char next_char)
 {
 	unsigned int num = va_arg(lst, unsigned int);
 	int count = 0;
-	
+
 	if (next_char == 'o')
 	{
 		count += print_char('0');
@@ -47,7 +48,7 @@ int print_with_hash(va_list lst, char next_char)
 		count += print_char('0');
 		next_char == 'x' ? (print_char('x')) : (print_char('X'));
 		count++;
-		count+= print_hex(num, next_char);
+		count += print_hex(num, next_char);
 	}
 	return (count);
 }

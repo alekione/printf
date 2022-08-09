@@ -13,7 +13,7 @@ int print_octal(unsigned int);
 int print_udecimal(unsigned int);
 int print_hex(unsigned int, char);
 int print_xstring(char *);
-int print_positive(va_list, char);
+int print_sign(va_list, char, char);
 int print_with_hash(va_list, char);
 int printf_rot13(va_list);
 
