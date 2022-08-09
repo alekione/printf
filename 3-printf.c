@@ -1,5 +1,7 @@
 #include "main.h"
 #include <stdarg.h>
+#include <limits.h>
+#include <stdlib.h>
 
 /**
  * print_sign - adds a positive sign to numbers
@@ -22,7 +24,7 @@ int print_sign(va_list lst, char sign, char next_char)
 	if (next_char == 'u')
 	{
 		count += print_char(sign);
-		count += print_udecimal(va_arg(lst, unsigned int));
+		count += print_num(va_arg(lst, unsigned int));
 	}
 	return (count);
 }
@@ -53,4 +55,16 @@ int print_with_hash(va_list lst, char next_char)
 		count += print_hex(num, next_char);
 	}
 	return (count);
+}
+
+/**
+ * print_short - print short int
+ * @num: num to print
+ * Return: counter to char printed
+ */
+int print_short(int num)
+{
+	if (num > SHRT_MAX || num < SHRT_MIN)
+		exit(1);
+	return (print_num(num));
 }

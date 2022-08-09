@@ -1,7 +1,7 @@
 #include "main.h"
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <limits.h>
 
 /**
  * print_binary - print binary code of a number
@@ -69,36 +69,15 @@ int print_octal(unsigned int num)
 }
 
 /**
- * print_udecimal - print numbers
+ * print_int - print intergers
  * @num: number to print
  * Return: count
  */
-int print_udecimal(unsigned int num)
+int print_int(long int num)
 {
-	int i = 0, len, count = 0;
-	char last, *ptr2, *ptr = (void *)malloc(sizeof(char));
-
-	if (num < 10)
-		return (print_char(num + '0') + count);
-	while (num != 0)
-	{
-		last = (num % 10) + '0';
-		if (i == 0)
-			*(ptr) = last;
-		else
-		{
-			ptr2 = realloc(ptr, i + 1);
-			*(ptr2 + i) = last;
-			ptr = ptr2;
-		}
-		num /= 10;
-		i++;
-	}
-
-	for (len = i; len > 0; len--)
-		count += print_char(ptr[len - 1]);
-	free(ptr);
-	return (count);
+	if (num > INT_MAX || num < INT_MIN)
+		exit(1);
+	return(print_num(num));
 }
 
 /**

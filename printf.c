@@ -37,16 +37,18 @@ int print_string(char *str)
  * @num: number to print
  * Return: count
  */
-int print_num(int num)
+int print_num(long int num)
 {
 	int i = 0, len, count = 0;
 	char last, *ptr2, *ptr = (void *)malloc(sizeof(char));
 
 	if (num == 0)
-		return (print_char('0') + count);
+		return (print_char('0'));
 	if (num < 0)
+	{
 		count += print_char('-');
-	num = abs(num);
+		num = num * -1;
+	}
 	while (num != 0)
 	{
 		last = (num % 10) + '0';
@@ -91,9 +93,14 @@ int _printf(const char *format, ...)
 				count += print_sign(lst, next_char, format[i + 2]);
 			if (next_char == '#')
 				count += print_with_hash(lst, format[i + 2]);
+			if (next_char == 'l')
+				count += print_num(va_arg(lst, long int));
+			if (next_char == 'h')
+				count += print_short(va_arg(lst, int));
 			else
 				count += continue_printf(next_char, lst);
-			if (next_char == '+' || next_char == '#' || next_char == ' ')
+			if (next_char == '+' || next_char == '#' || next_char == ' ' ||
+					next_char == 'l' || next_char == 'h')
 				i++;
 			i += 2;
 			continue;
@@ -122,13 +129,13 @@ int continue_printf(char next_char, va_list lst)
 	if (next_char == '%')
 		count += print_char('%');
 	if (next_char == 'i' || next_char == 'd')
-		count += print_num(va_arg(lst, int));
+		count += print_int(va_arg(lst, long int));
 	if (next_char == 'b')
 		count += print_binary(va_arg(lst, unsigned int));
 	if (next_char == 'o')
 		count += print_octal(va_arg(lst, unsigned int));
 	if (next_char == 'u')
-		count += print_udecimal(va_arg(lst, unsigned int));
+		count += print_num(va_arg(lst, unsigned int));
 	if (next_char == 'x' || next_char == 'X')
 		count += print_hex(va_arg(lst, unsigned int), next_char);
 	if (next_char == 'S')
