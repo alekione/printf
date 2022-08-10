@@ -1,7 +1,27 @@
 #include "main.h"
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <limits.h>
+
+/**
+ * print_long - print a modified long int
+ * @num: number to modify
+ * @char: next char
+ * Return: number of printed char
+ */
+int print_long(long int num, char chr)
+{
+	if (chr == 'd' || chr == 'i' || chr == 'u')
+		return (print_num(num));
+	if (chr == 'o')
+		return (print_octal(num));
+	if (chr == 'x' || chr == 'X')
+		return (print_hex(num, chr));
+	print_char('%');
+	print_char('l');
+	print_char(chr);
+	return (0);
+}
 
 /**
  * print_binary - print binary code of a number
@@ -65,39 +85,6 @@ int print_octal(unsigned int num)
 	}
 	for (j = i; j > 0; j--)
 		count += print_char(ptr[j - 1]);
-	return (count);
-}
-
-/**
- * print_udecimal - print numbers
- * @num: number to print
- * Return: count
- */
-int print_udecimal(unsigned int num)
-{
-	int i = 0, len, count = 0;
-	char last, *ptr2, *ptr = (void *)malloc(sizeof(char));
-
-	if (num < 10)
-		return (print_char(num + '0') + count);
-	while (num != 0)
-	{
-		last = (num % 10) + '0';
-		if (i == 0)
-			*(ptr) = last;
-		else
-		{
-			ptr2 = realloc(ptr, i + 1);
-			*(ptr2 + i) = last;
-			ptr = ptr2;
-		}
-		num /= 10;
-		i++;
-	}
-
-	for (len = i; len > 0; len--)
-		count += print_char(ptr[len - 1]);
-	free(ptr);
 	return (count);
 }
 
