@@ -22,6 +22,6 @@ int print_with_hash(va_list, char);
 int print_long(long int, char);
 int print_short(int, char);
 int printf_rot13(va_list);
-int printf_revstr(va_list types, char buffer[], int flags, int width, int precision, int size);
+int printf_revstr(va_list types);
 
 #endif

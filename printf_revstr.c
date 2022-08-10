@@ -1,45 +1,29 @@
 #include "main.h"
 #include <unistd.h>
- 
+#include <string.h>
+
 /**
  * printf_revstr - function that print a string in reverse
  * @types: Lista of arguments
- * @buffer: Buffer array to handle print
- * @flags:  Calculates active flags
- * @width: get width
- * @precision: Precision specification
- * @size: Size specifier
  *
- * Return: reversed string
+ * Return: number of char printed
  */
-int printf_revstr(va_list types, char buffer[], int flags, int width, int precision, int size)
+int printf_revstr(va_list types)
 {
 	char *str;
-	int i, count = 0;
-
-	UNUSED(buffer);
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(size);
+	int i, len, count = 0;
 
 	str = va_arg(types, char *);
 
-	if (str == NULL)
+	if (str == NULL || strlen(str) == 0)
 	{
-		UNUSED(precision);
-
-		str = ")Null(";
+		return (0);
 	}
-	for (i = 0; str[i]; i++)
-		;
 
-	for (i = i - 1; i >= 0; i--)
+	len = strlen(str);
+	for (i = len - 1; i >= 0; i--)
 	{
-		char z = str[i];
-
-		write(1, &z, 1);
-		count++;
-
+		count += print_char(str[i]);
 	}
-	return (count);	
+	return (count);
 }

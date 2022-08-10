@@ -142,5 +142,7 @@ int continue_printf(char next_char, va_list lst)
 		count += print_xstring(va_arg(lst, char *));
 	if (next_char == 'R')
 		count += printf_rot13(lst);
+	if (next_char == 'r')
+		count += printf_revstr(lst);
 	return (count);
 }
