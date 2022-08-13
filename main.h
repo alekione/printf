@@ -6,7 +6,7 @@
 
 int print_char(char);
 int _printf(const char *, ...);
-int continue_printf(char *,va_list);
+int continue_printf(char *, va_list);
 int print_string(char *);
 bool isformat(char);
 char *process_short(int, char);
@@ -24,4 +24,6 @@ char *process_xstring(char *);
 char *process_binary(unsigned int);
 char *continue_process(char *, char, va_list);
 char *process_with_hash(char, char *);
+char *process_strrev(char *);
+char *process_rot13(char *);
 #endif

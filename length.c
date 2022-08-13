@@ -6,12 +6,13 @@
 /**
  * process_long - print a modified long int
  * @num: number to modify
- * @char: next char
+ * @chr: next char
  * Return: number of printed char
  */
 char *process_long(long int num, char chr)
 {
 	char *str;
+
 	if (chr == 'd' || chr == 'i' || chr == 'u')
 	{
 		if (num < 0)
@@ -75,6 +76,7 @@ char *process_lnum(long int num)
 /**
  * process_short -  short int
  * @num: num to print
+ * @chr: format char
  * Return: string num
  */
 char *process_short(int num, char chr)
@@ -94,7 +96,7 @@ char *process_short(int num, char chr)
 	if (chr == 'o')
 		return (process_octal(num));
 	if (chr == 'x' || chr == 'X')
-		return(process_hex(num, chr));
+		return (process_hex(num, chr));
 	str = (char *)malloc(4 * sizeof(char));
 	*(str) = '%';
 	*(str + 1) = 'h';

@@ -92,7 +92,7 @@ int  continue_printf(char *format, va_list lst)
 		str = continue_process(str, chr, lst);
 	}
 	count += print_string(str);
-	free (str);
+	free(str);
 	return (count);
 }
 
@@ -125,5 +125,9 @@ char *continue_process(char *ptr, char chr, va_list lst)
 		*str = process_xstring(va_arg(lst, char *));
 	if (chr == '+' || chr == ' ')
 		*str = process_sign(*str, chr);
+	if (chr == 'r')
+		*str = process_strrev(va_arg(lst, char *));
+	if (chr == 'R')
+		*str = process_rot13(va_arg(lst, char *));
 	return (*str);
 }

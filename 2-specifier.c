@@ -18,7 +18,7 @@ char *process_int(int num)
 		num *= -1;
 		return (strcat(str, process_lnum(num)));
 	}
-	return(process_lnum(num));
+	return (process_lnum(num));
 }
 
 /**
@@ -28,7 +28,7 @@ char *process_int(int num)
  */
 bool isformat(char chr)
 {
-	char *ptr, *str = "csdieE fouxXp%hlL*+-#0123456789";
+	char *ptr, *str = "csdieE fouxXp%hlLrR*+-#0123456789";
 
 	ptr = strchr(str, chr);
 	if (ptr != NULL)
@@ -37,8 +37,8 @@ bool isformat(char chr)
 }
 
 /**
- * print_with_hash - print a more preformatted text
- * @chr: char to determine format 
+ * process_with_hash - print a more preformatted text
+ * @chr: char to determine format
  * @str: string to format
  * Return: formatted string
  */
@@ -51,7 +51,7 @@ char *process_with_hash(char chr, char *str)
 	else
 	{
 		ptr = (char *)malloc(3 * sizeof(char));
-		*(ptr) = '0';	
+		*(ptr) = '0';
 		*(ptr + 1) = chr;
 		*(ptr + 2) = '\0';
 	}

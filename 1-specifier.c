@@ -24,7 +24,7 @@ char *process_char(char c)
 char *process_binary(unsigned int num)
 {
 	char chr, *ptr3, *ptr2, *ptr = (char *)malloc(sizeof(char));
-	int i = 0, j, m =0, count = 1;
+	int i = 0, j, m = 0, count = 1;
 
 	if (num == 0)
 		return (process_char('0'));
@@ -48,7 +48,7 @@ char *process_binary(unsigned int num)
 	ptr3 = (char *)malloc(count * sizeof(char));
 	for (j = i; j > 0; j--)
 	{
-		*(ptr3 + m) = ptr[ j - 1];
+		*(ptr3 + m) = ptr[j - 1];
 		m++;
 	}
 	*(ptr3 + m) = '\0';
@@ -133,7 +133,7 @@ char *process_hex(unsigned int num, char identifier)
 	ptr3 = (char *)malloc(count * sizeof(char));
 	for (j = i; j > 0; j--)
 	{
-		*(ptr3 + m)= ptr[j - 1];
+		*(ptr3 + m) = ptr[j - 1];
 		m++;
 	}
 	*(ptr3 + m) = '\0';
@@ -142,13 +142,13 @@ char *process_hex(unsigned int num, char identifier)
 }
 
 /**
- * proces_xstring - process a string
+ * process_xstring - process a string
  * @str: string to print
  * Return: processed str
  */
 char *process_xstring(char *str)
 {
-	char chr, *ptr2, *ptr; 
+	char chr, *ptr2, *ptr;
 	int i = 0, len, j = 1;
 
 	if (str == NULL || strlen(str) == 0)
@@ -177,7 +177,7 @@ char *process_xstring(char *str)
 			j += 2;
 		}
 		ptr2 = (char *)realloc(ptr, j + 1);
-		*(ptr2 + (j - 1))= str[i];
+		*(ptr2 + (j - 1)) = str[i];
 		ptr = ptr2;
 		j++;
 		i++;

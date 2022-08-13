@@ -23,7 +23,7 @@ char *fill_width(char fill, char size, char *str)
 		for (i = 0; i < num - len; i++)
 			*(ptr + i) = fill;
 		*(ptr + i) = '\0';
-		return(strcat(ptr, str));
+		return (strcat(ptr, str));
 	}
 	return (str);
 }
@@ -36,7 +36,7 @@ char *fill_width(char fill, char size, char *str)
  */
 char *allign_left(char chr, char *str)
 {
-	int i,j , m = 0,len1, len2;
+	int i, j, m = 0, len1, len2;
 	char *ptr3, *ptr2, *ptr = "cdieEfgGosuxXp";
 
 	ptr2 = strchr(ptr, chr);
@@ -78,5 +78,5 @@ char *process_sign(char *str, char chr)
 	if (str[0] == '-')
 		return (str);
 	ptr = process_char(chr);
-	return(strcat(ptr, str));
+	return (strcat(ptr, str));
 }

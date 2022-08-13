@@ -1,29 +1,31 @@
 #include "main.h"
-#include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 /**
- * printf_revstr - function that print a string in reverse
- * @types: Lista of arguments
+ * process_strrev - function that print a string in reverse
+ * @str: string to print
  *
- * Return: number of char printed
+ * Return: reversed string
  */
-int printf_revstr(va_list types)
+char *process_strrev(char *str)
 {
-	char *str;
-	int i, len, count = 0;
-
-	str = va_arg(types, char *);
+	char *ptr;
+	int i, len, m = 0;
 
 	if (str == NULL || strlen(str) == 0)
 	{
-		return (0);
+		return (str);
 	}
 
 	len = strlen(str);
+	ptr = (char *)malloc((len + 1) * sizeof(char));
+	m = 0;
 	for (i = len - 1; i >= 0; i--)
 	{
-		count += print_char(str[i]);
+		*(ptr + m) = str[i];
+		m++;
 	}
-	return (count);
+	*(ptr + m) = '\0';
+	return (ptr);
 }
