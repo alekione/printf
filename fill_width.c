@@ -62,6 +62,7 @@ char *allign_left(char chr, char *str)
 	for (i = len2; i < len1; i++)
 		*(ptr3 + i) = chr;
 	*(ptr3 + i) = '\0';
+	free(ptr2);
 	return (ptr3);
 }
 

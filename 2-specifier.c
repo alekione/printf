@@ -28,7 +28,7 @@ char *process_int(int num)
  */
 bool isformat(char chr)
 {
-	char *ptr, *str = "csdieE fouxXp%hlLrR*+-#0123456789";
+	char *ptr, *str = "csdieE fouxX%hlLrR*+-#0123456789";
 
 	ptr = strchr(str, chr);
 	if (ptr != NULL)

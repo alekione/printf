@@ -25,6 +25,8 @@ int print_string(char *str)
 
 	len = strlen(str);
 	for (i = 0; i < len; i++)
+	{
 		count += print_char(str[i]);
+	}
 	return (count);
 }
