@@ -25,4 +25,4 @@ int printf_rot13(va_list);
 int printf_revstr(va_list types);
 int get_width(const char *format, int *i, va_list list);
 
-#endif
+#endif /*LISTS_H*/
