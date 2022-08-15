@@ -32,19 +32,17 @@ int _printf(const char *format, ...)
 				else
 				{
 					s_ptr[m] = '\0';
+					i = j + 1;
 					break;
 				}
 				m++;
 			}
+			print_string(s_ptr);
 			if (strlen(s_ptr) == 0)
 				m = 0;
 			else
-			{
 				count += continue_printf(s_ptr, lst);
-				m++;
-			}
 		}
-		i += m;
 		count += print_char(format[i]);
 	}
 	va_end(lst);
@@ -112,7 +110,7 @@ char *continue_process(char *ptr, char chr, va_list lst)
 	if (chr == 'c')
 		*str = process_char(va_arg(lst, int));
 	if (chr == 's')
-		*str = va_arg(lst, char *);
+		*str = process_str(va_arg(lst, char *));
 	if (chr == 'u')
 		*str = process_lnum(va_arg(lst, unsigned int));
 	if (chr == 'b')

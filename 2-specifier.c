@@ -57,3 +57,16 @@ char *process_with_hash(char chr, char *str)
 	}
 	return (strcat(ptr, str));
 }
+
+/**
+ * process_str - process a string
+ * @str: string to process
+ * Return: a string
+ */
+char *process_str(char *str)
+{
+	char *ptr;
+
+	ptr = strdup(str);
+	return (ptr);
+}

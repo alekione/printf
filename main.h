@@ -26,4 +26,5 @@ char *continue_process(char *, char, va_list);
 char *process_with_hash(char, char *);
 char *process_strrev(char *);
 char *process_rot13(char *);
+char *process_str(char *str);
 #endif
