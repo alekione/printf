@@ -2,7 +2,6 @@
 #include <stdarg.h>
 #include <limits.h>
 #include <stdlib.h>
-**
 
 /**
  * print_sign - adds a positive sign to numbers

@@ -3,7 +3,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-**
 
 /**
  * print_char - print a character to stdout
