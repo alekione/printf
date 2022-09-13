@@ -90,15 +90,15 @@ int _printf(const char *format, ...)
 				if (!(isiden(format[i + 2])))
 				{
 					count += print_sign(lst, next_char, format[i + 2]);
-					continue;
 				}
+				else
+				{
 				count += print_sign(lst, format[i + 2], format[i + 3]);
 				i++;
+				}
 			}
 			if (next_char == '#')
 				count += print_with_hash(lst, format[i + 2]);
-			if (next_char == 'h')
-				count += print_short(va_arg(lst, int), format[i + 2]);
 			else
 				count += continue_printf(next_char, format[i + 2], lst);
 			if (next_char == '+' || next_char == '#' || next_char == ' ' ||
@@ -116,7 +116,8 @@ int _printf(const char *format, ...)
 
 /**
  * continue_printf - continue the other _printf function
- * @next_char: conversion specifier
+ * @nnext_char: conversion specifier
+ * @nnext_char - char after next char
  * @lst: argument list
  * Return: sum of char printed
  */
@@ -124,6 +125,8 @@ int continue_printf(char next_char, char nnext_char, va_list lst)
 {
 	int count = 0;
 
+	if (next_char == 'h')
+		count += print_short(va_arg(lst, int), nnext_char);
 	if (next_char == 'l')
 		count += print_long(va_arg(lst, long int), nnext_char);
 	if (next_char == 'c')
