@@ -158,6 +158,7 @@ int print_xstring(char *str)
 				count += print_char('0');
 			count += print_hex((unsigned int)chr, 'X');
 			i++;
+			continue;
 		}
 		count += print_char(str[i]);
 		i++;
