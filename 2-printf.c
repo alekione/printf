@@ -5,7 +5,7 @@
 /**
  * print_long - print a modified long int
  * @num: number to modify
- * @char: next char
+ * @chr: next char
  * Return: number of printed char
  */
 int print_long(long int num, char chr)

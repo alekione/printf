@@ -41,7 +41,7 @@ int print_with_hash(va_list lst, char next_char)
 	int count = 0;
 
 	if (num == 0)
-		return(print_char('0'));
+		return (print_char('0'));
 	if (next_char == 'o')
 	{
 		count += print_char('0');
@@ -60,6 +60,7 @@ int print_with_hash(va_list lst, char next_char)
 /**
  * print_short - print short int
  * @num: num to print
+ * @chr: character to chaeck for conditions
  * Return: counter to char printed
  */
 int print_short(int num, char chr)
@@ -69,7 +70,7 @@ int print_short(int num, char chr)
 	if (chr == 'o')
 		return (print_octal(num));
 	if (chr == 'x' || chr == 'X')
-		return(print_hex(num, chr));
+		return (print_hex(num, chr));
 	print_char('%');
 	print_char('h');
 	print_char(chr);
