@@ -1,37 +1,27 @@
 #ifndef MAIN_H
 #define MAIN_H
-
 #include <stdarg.h>
-#include <stddef.h>
-
-/* ========= printf.c ============ */
+#include <unistd.h>
+#include <stdbool.h>
 
 int print_char(char);
+int _printf(const char *, ...);
+int continue_printf(char *, va_list);
 int print_string(char *);
-int print_num(long int);
-int _printf(const char *format, ...);
-int continue_printf(char, va_list);
-
-/* ========= 2-printf.c ========= */
-
-int print_long(long int, char);
-int print_binary(unsigned int);
-int print_octal(unsigned int);
-int print_hex(unsigned int, char);
-int print_xstring(char *);
-
-/* ======== 3-printf.c ========= */
-
-int print_sign(va_list, char, char);
-int print_with_hash(va_list, char);
-int print_short(int, char);
-
-/* ======= printf_revstr.c ======= */
-
-int printf_revstr(va_list types);
-
-/* ======= printf_rot12.c ====== */
-
-int printf_rot13(va_list);
-
+bool isformat(char);
+char *process_short(int, char);
+char *process_long(long int, char);
+char *process_lnum(long int);
+char *process_int(int);
+char *fill_width(char, char, char *);
+char *allign_left(char, char *);
+char *process_char(char);
+char *proces_binary(unsigned int);
+char *process_octal(unsigned int);
+char *process_hex(unsigned int, char);
+char *process_sign(char *, char);
+char *process_xstring(char *);
+char *process_binary(unsigned int);
+char *continue_process(char *, char, va_list);
+char *process_with_hash(char, char *);
 #endif

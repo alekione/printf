@@ -1,148 +1,128 @@
 #include "main.h"
 #include <stdarg.h>
 #include <string.h>
-#include <unistd.h>
+#include <ctype.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 /**
- * print_char - print a character to stdout
- * @c: character to print
- * Return: char printed
- */
-int print_char(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
-/**
- * print_string - print a string to stdout
- * @str: string to print
- * Return: char printed
- */
-int print_string(char *str)
-{
-	int j, i, count = 0;
-
-	if (str == NULL)
-		str = "(null)";
-	i = strlen(str);
-	for (j = 0; j < i; j++)
-		count += print_char(str[j]);
-	return (count);
-}
-
-/**
- * print_num - print numbers
- * @num: number to print
- * Return: count
- */
-int print_num(long int num)
-{
-	int i = 0, len, count = 0;
-	char last, *ptr2, *ptr = (void *)malloc(sizeof(char));
-
-	if (num == 0)
-		return (print_char('0'));
-	if (num < 0)
-	{
-		count += print_char('-');
-		num = num * -1;
-	}
-	while (num != 0)
-	{
-		last = (num % 10) + '0';
-		if (i == 0)
-			*(ptr) = last;
-		else
-		{
-			ptr2 = realloc(ptr, i + 1);
-			*(ptr2 + i) = last;
-			ptr = ptr2;
-		}
-		num /= 10;
-		i++;
-	}
-
-	for (len = i; len > 0; len--)
-		count += print_char(ptr[len - 1]);
-	free(ptr);
-	return (count);
-}
-/**
- * _printf - print args to stdout
- * @format: arg specifiers
- * Return: char printed
+ * _printf - implementation of a stdio printf
+ * @format: char format
+ * Return: char(s) printed
  */
 int _printf(const char *format, ...)
 {
 	va_list lst;
-	int i = 0, count = 0, len;
-	char next_char;
+	int i, j, m, len, count = 0;
+	char s_ptr[8];
 
 	if (format == NULL || strlen(format) == 0)
-		return (count);
+		return (EXIT_FAILURE);
 	va_start(lst, format);
 	len = strlen(format);
-	while (i < len)
+	for (i = 0; i < len; i++)
 	{
+		m = 0;
 		if (format[i] == '%')
 		{
-			next_char = format[i + 1];
-			if (next_char == '+' || next_char == ' ')
-				count += print_sign(lst, next_char, format[i + 2]);
-			if (next_char == '#')
-				count += print_with_hash(lst, format[i + 2]);
-			if (next_char == 'l')
-				count += print_long(va_arg(lst, long int), format[i + 2]);
-			if (next_char == 'h')
-				count += print_short(va_arg(lst, int), format[i + 2]);
+			for (j = i + 1; j < i + 6; j++)
+			{
+				if (isformat(format[j]))
+					s_ptr[m] = format[j];
+				else
+				{
+					s_ptr[m] = '\0';
+					break;
+				}
+				m++;
+			}
+			if (strlen(s_ptr) == 0)
+				m = 0;
 			else
-				count += continue_printf(next_char, lst);
-			if (next_char == '+' || next_char == '#' || next_char == ' ' ||
-					next_char == 'l' || next_char == 'h')
-				i++;
-			i += 2;
-			continue;
+			{
+				count += continue_printf(s_ptr, lst);
+				m++;
+			}
 		}
+		i += m;
 		count += print_char(format[i]);
-		i++;
 	}
 	va_end(lst);
 	return (count);
 }
 
 /**
- * continue_printf - continue the other _printf function
- * @next_char: conversion specifier
- * @lst: argument list
- * Return: sum of char printed
+ * continue_printf - continues the _printf function
+ * @format: formatted char
+ * @lst: argument passed to the _printf
+ * Return: char(s) printed
  */
-int continue_printf(char next_char, va_list lst)
+int  continue_printf(char *format, va_list lst)
 {
-	int count = 0;
+	int i, len, count = 0;
+	char *str, chr;
 
-	if (next_char == 'c')
-		count += print_char(va_arg(lst, int));
-	if (next_char == 's')
-		count += print_string(va_arg(lst, char *));
-	if (next_char == '%')
-		count += print_char('%');
-	if (next_char == 'i' || next_char == 'd')
-		count += print_num(va_arg(lst, int));
-	if (next_char == 'b')
-		count += print_binary(va_arg(lst, unsigned int));
-	if (next_char == 'o')
-		count += print_octal(va_arg(lst, unsigned int));
-	if (next_char == 'u')
-		count += print_num(va_arg(lst, unsigned int));
-	if (next_char == 'x' || next_char == 'X')
-		count += print_hex(va_arg(lst, unsigned int), next_char);
-	if (next_char == 'S')
-		count += print_xstring(va_arg(lst, char *));
-	if (next_char == 'R')
-		count += printf_rot13(lst);
-	if (next_char == 'r')
-		count += printf_revstr(lst);
+	len = strlen(format);
+	for (i = len; i > 0; i--)
+	{
+		chr = format[i - 1];
+		if (chr == '%')
+			return (print_char('%'));
+		if (format[i - 1] == 'h' || format[i - 1] == 'l')
+		{
+			if (format[i - 1] == 'h')
+				str = process_short(va_arg(lst, int), chr);
+			else
+				str = process_long(va_arg(lst, long int), chr);
+			i -= 2;
+			continue;
+		}
+		if (isdigit(chr) && isdigit(format[i - 2]))
+		{
+			str = fill_width(format[i - 2], chr, str);
+			i -= 2;
+			continue;
+		}
+		if (isdigit(chr) && !(isdigit(format[i - 2])))
+			str = fill_width(32, chr, str);
+		if (chr == '-')
+			str = allign_left(format[i + 1], str);
+		if (chr == '#')
+			str = process_with_hash(format[len - 1], str);
+		str = continue_process(str, chr, lst);
+	}
+	count += print_string(str);
 	return (count);
+}
+
+/**
+ * continue_process - continues continue_printf function
+ * @ptr: string pointer (parrtially formatted string)
+ * @chr: char to compare formatting option
+ * @lst: arguments from _printf function
+ * Return: a formatted string
+ */
+char *continue_process(char *ptr, char chr, va_list lst)
+{
+	char **str = &ptr;
+
+	if (chr == 'd' || chr == 'i')
+		*str = process_int(va_arg(lst, int));
+	if (chr == 'c')
+		*str = process_char(va_arg(lst, int));
+	if (chr == 's')
+		*str = va_arg(lst, char *);
+	if (chr == 'u')
+		*str = process_lnum(va_arg(lst, unsigned int));
+	if (chr == 'b')
+		*str = process_binary(va_arg(lst, unsigned int));
+	if (chr == 'o')
+		*str = process_octal(va_arg(lst, unsigned int));
+	if (chr == 'x' || chr == 'X')
+		*str = process_hex(va_arg(lst, unsigned int), chr);
+	if (chr == 'S')
+		*str = process_xstring(va_arg(lst, char *));
+	if (chr == '+' || chr == ' ')
+		*str = process_sign(*str, chr);
+	return (*str);
 }
