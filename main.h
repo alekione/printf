@@ -3,6 +3,12 @@
 
 #include <stdarg.h>
 #include <stddef.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <unistd.h>
+#include <stdio.h>
 
 /* ========= printf.c ============ */
 
@@ -10,7 +16,7 @@ int print_char(char);
 int print_string(char *);
 int print_num(long int);
 int _printf(const char *format, ...);
-int continue_printf(char, va_list);
+int continue_printf(char, char, va_list);
 
 /* ========= 2-printf.c ========= */
 
@@ -25,6 +31,8 @@ int print_xstring(char *);
 int print_sign(va_list, char, char);
 int print_with_hash(va_list, char);
 int print_short(int, char);
+bool isiden(char);
+int print_address(void *);
 
 /* ======= printf_revstr.c ======= */
 

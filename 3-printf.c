@@ -1,7 +1,4 @@
 #include "main.h"
-#include <stdarg.h>
-#include <limits.h>
-#include <stdlib.h>
 
 /**
  * print_sign - adds a positive sign to numbers
@@ -14,10 +11,13 @@ int print_sign(va_list lst, char sign, char next_char)
 {
 	int num, count = 0;
 
+	if (next_char == '+')
+
+	printf("sign = %c   next = %c\n", sign, next_char);
 	if (next_char == 'd' || next_char == 'i')
 	{
 		num = va_arg(lst, int);
-		if (num > 0)
+		if (num >= 0)
 			count += print_char(sign);
 		count += print_num(num);
 	}
@@ -75,4 +75,50 @@ int print_short(int num, char chr)
 	print_char('h');
 	print_char(chr);
 	return (3);
+}
+
+/**
+ * isiden - checks whether the given char is an identifier
+ * @chr: character to compare
+ * Return: true or false
+ */
+bool isiden(char chr)
+{
+	if (chr == ' ' || chr == '#' || chr == '+')
+		return (true);
+	return (false);
+}
+
+/**
+ * print_address - prints a given address
+ * @addr: address to print
+ * Return: number of printed characters
+ */
+int print_address(void *addr)
+{
+	int i, ind = 2, num;
+	char chr, s_ptr[25];
+	intptr_t ptr = (intptr_t)addr;
+
+	s_ptr[0] = '0';
+	s_ptr[1] = 'x';
+	for (i = (sizeof(ptr) << 3) - 4; i >= 0; i -= 4, ind++)
+	{
+		num = (ptr >> i) & 0xf;
+		if (num >= 0 && num < 10)
+			chr = '0' + num;
+		else
+			chr = 'a' + (num - 10);
+		s_ptr[ind] = chr;
+	}
+	s_ptr[ind] = '\0';
+	while (true)
+	{
+		i = 2;
+		if (s_ptr[i] != '0')
+			break;
+		for (; s_ptr[i] != '\0'; i++)
+			s_ptr[i] = s_ptr[i + 1];
+	}
+	return (print_string(s_ptr));
 }

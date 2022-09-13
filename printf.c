@@ -1,8 +1,4 @@
 #include "main.h"
-#include <stdarg.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
 
 /**
  * print_char - print a character to stdout
@@ -90,15 +86,21 @@ int _printf(const char *format, ...)
 		{
 			next_char = format[i + 1];
 			if (next_char == '+' || next_char == ' ')
-				count += print_sign(lst, next_char, format[i + 2]);
+			{
+				if (!(isiden(format[i + 2])))
+				{
+					count += print_sign(lst, next_char, format[i + 2]);
+					continue;
+				}
+				count += print_sign(lst, format[i + 2], format[i + 3]);
+				i++;
+			}
 			if (next_char == '#')
 				count += print_with_hash(lst, format[i + 2]);
-			if (next_char == 'l')
-				count += print_long(va_arg(lst, long int), format[i + 2]);
 			if (next_char == 'h')
 				count += print_short(va_arg(lst, int), format[i + 2]);
 			else
-				count += continue_printf(next_char, lst);
+				count += continue_printf(next_char, format[i + 2], lst);
 			if (next_char == '+' || next_char == '#' || next_char == ' ' ||
 					next_char == 'l' || next_char == 'h')
 				i++;
@@ -118,10 +120,12 @@ int _printf(const char *format, ...)
  * @lst: argument list
  * Return: sum of char printed
  */
-int continue_printf(char next_char, va_list lst)
+int continue_printf(char next_char, char nnext_char, va_list lst)
 {
 	int count = 0;
 
+	if (next_char == 'l')
+		count += print_long(va_arg(lst, long int), nnext_char);
 	if (next_char == 'c')
 		count += print_char(va_arg(lst, int));
 	if (next_char == 's')
@@ -144,5 +148,7 @@ int continue_printf(char next_char, va_list lst)
 		count += printf_rot13(lst);
 	if (next_char == 'r')
 		count += printf_revstr(lst);
+	if (next_char == 'p')
+		count += print_address(va_arg(lst, void *));
 	return (count);
 }

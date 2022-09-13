@@ -1,7 +1,5 @@
 #include "main.h"
-#include <string.h>
-#include <stdlib.h>
-#include <limits.h>
+
 /**
  * print_long - print a modified long int
  * @num: number to modify
