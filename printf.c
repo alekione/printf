@@ -24,8 +24,8 @@ int print_string(char *str)
 {
 	int j, i, count = 0;
 
-	if (str == NULL || strlen(str) == 0)
-		return (count);
+	if (str == NULL)
+		str = "(null)";
 	i = strlen(str);
 	for (j = 0; j < i; j++)
 		count += print_char(str[j]);
