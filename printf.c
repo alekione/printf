@@ -25,7 +25,9 @@ int _printf(const char *format, ...)
 		m = 0;
 		if (format[i] == '%')
 		{
-			for (j = i + 1; j < i + 6; j++)
+			if (format[i + 1] == '\0')
+				return (EXIT_FAILURE);
+			for (j = i + 1; j < i + 6; j++, m++)
 			{
 				if (isformat(format[j]))
 					s_ptr[m] = format[j];
@@ -34,7 +36,6 @@ int _printf(const char *format, ...)
 					s_ptr[m] = '\0';
 					break;
 				}
-				m++;
 			}
 			if (strlen(s_ptr) == 0)
 				m = 0;
