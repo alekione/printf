@@ -9,14 +9,15 @@
 #include <limits.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <ctype.h>
 
 /* ========= printf.c ============ */
 
 int print_char(char);
 int print_string(char *);
-int print_num(long int);
 int _printf(const char *format, ...);
-int continue_printf(char, char, va_list);
+int continue_printf(char, char, char, va_list);
+int continue_printf2(char, va_list);
 
 /* ========= 2-printf.c ========= */
 
@@ -36,7 +37,20 @@ int print_address(void *);
 
 /* ========= 4-printf.c =========== */
 int print_unsigned_int(unsigned long int);
+int print_width(char, char, va_list);
+int print_num(long int);
 
+/* ========== 5-printf.c =========== */
+
+char *_strdup(char *);
+char *create_binary(unsigned int);
+char *create_octal(unsigned int);
+char *create_number(unsigned long int);
+char *create_hex(unsigned int, int);
+
+/* ======== 6-printf.c ======= */
+
+char *create_xstring(char *);
 
 /* ======= printf_revstr.c ======= */
 

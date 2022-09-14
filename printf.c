@@ -29,28 +29,6 @@ int print_string(char *str)
 }
 
 /**
- * print_num - print numbers
- * @number: number to print
- * Return: count
- */
-int print_num(long int number)
-{
-	unsigned long int num;
-	int count = 0;
-
-	if (number == 0)
-		return (print_char('0'));
-	if (number < 0)
-	{
-		count += print_char('-');
-		num = number * -1;
-	}
-	else
-		num = number;
-	count += print_unsigned_int(num);
-	return (count);
-}
-/**
  * _printf - print args to stdout
  * @format: arg specifiers
  * Return: char printed
@@ -70,24 +48,15 @@ int _printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			next_char = format[i + 1];
-			if (next_char == '+' || next_char == ' ')
-			{
-				if (!(isiden(format[i + 2])))
-				{
-					count += print_sign(lst, next_char, format[i + 2]);
-				}
-				else
-				{
-				count += print_sign(lst, format[i + 2], format[i + 3]);
-				i++;
-				}
-			}
-			if (next_char == '#')
-				count += print_with_hash(lst, format[i + 2]);
+			if (isdigit(next_char) || next_char == '*')
+				count += print_width(next_char, format[i + 2], lst);
 			else
-				count += continue_printf(next_char, format[i + 2], lst);
+				count += continue_printf(next_char, format[i + 2], format[i + 3], lst);
+			if ((next_char == '+' || next_char == ' ') && isiden(format[i + 2]))
+				i++;
 			if (next_char == '+' || next_char == '#' || next_char == ' ' ||
-					next_char == 'l' || next_char == 'h')
+				next_char == 'l' || next_char == 'h' || isdigit(next_char) ||
+				next_char == '*')
 				i++;
 			i += 2;
 			continue;
@@ -103,13 +72,24 @@ int _printf(const char *format, ...)
  * continue_printf - continue the other _printf function
  * @next_char: conversion specifier
  * @nnext_char: char after next char
+ * @n_nnext_char: char after nnext_char
  * @lst: argument list
  * Return: sum of char printed
  */
-int continue_printf(char next_char, char nnext_char, va_list lst)
+int continue_printf(char next_char, char nnext_char,
+		char n_nnext_char,  va_list lst)
 {
 	int count = 0;
 
+	if (next_char == '+' || next_char == ' ')
+	{
+		if (!(isiden(nnext_char)))
+			count += print_sign(lst, next_char, nnext_char);
+		else
+			count += print_sign(lst, nnext_char, n_nnext_char);
+	}
+	if (next_char == '#')
+		count += print_with_hash(lst, nnext_char);
 	if (next_char == 'h')
 		count += print_short(va_arg(lst, int), nnext_char);
 	if (next_char == 'l' && nnext_char != 'u')
@@ -124,6 +104,21 @@ int continue_printf(char next_char, char nnext_char, va_list lst)
 		count += print_char('%');
 	if (next_char == 'i' || next_char == 'd')
 		count += print_num(va_arg(lst, int));
+	else
+		count += continue_printf2(next_char, lst);
+	return (count);
+}
+
+/**
+ * continue_printf2 - continues printf function
+ * @next_char: comparison char
+ * @lst: va_list arguments
+ * Return: number of characters printed
+ */
+int continue_printf2(char next_char, va_list lst)
+{
+	int count = 0;
+
 	if (next_char == 'b')
 		count += print_binary(va_arg(lst, unsigned int));
 	if (next_char == 'o')

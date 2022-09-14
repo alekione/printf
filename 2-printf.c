@@ -27,29 +27,15 @@ int print_long(long int num, char chr)
  */
 int print_binary(unsigned int num)
 {
-	char chr, *ptr2, *ptr = (char *)malloc(sizeof(char));
-	int i = 0, j, count = 0;
+	char *ptr;
+	int count = 0;
 
 	if (num == 0)
-		return (print_char('0') + count);
+		return (print_char('0'));
 	if (num == 1)
-		return (print_char('1') + count);
-	while (num > 0)
-	{
-		chr = (num % 2) + '0';
-		if (i == 0)
-			*(ptr) = chr;
-		else
-		{
-			ptr2 = (char *)realloc(ptr, i + 1);
-			*(ptr2 + i) = chr;
-			ptr = ptr2;
-		}
-		num /= 2;
-		i++;
-	}
-	for (j = i; j > 0; j--)
-		count += print_char(ptr[j - 1]);
+		return (print_char('1'));
+	ptr = create_binary(num);
+	count += print_string(ptr);
 	free(ptr);
 	return (count);
 }
@@ -61,27 +47,14 @@ int print_binary(unsigned int num)
  */
 int print_octal(unsigned int num)
 {
-	int rem, count = 0, i = 0, j;
-	char *ptr2, *ptr = (char *)malloc(sizeof(char));
+	int count = 0;
+	char *ptr;
 
 	if (num == 0)
-		count += print_char('0');
-	while (num != 0)
-	{
-		rem = num % 8;
-		if (i == 0)
-			*(ptr) = rem + '0';
-		else
-		{
-			ptr2 = (char *)realloc(ptr, i + 1);
-			*(ptr2 + i) = rem + '0';
-			ptr = ptr2;
-		}
-		i++;
-		num /= 8;
-	}
-	for (j = i; j > 0; j--)
-		count += print_char(ptr[j - 1]);
+		return (print_char('0'));
+	ptr = create_octal(num);
+	count += print_string(ptr);
+	free(ptr);
 	return (count);
 }
 
@@ -93,42 +66,15 @@ int print_octal(unsigned int num)
  */
 int print_hex(unsigned int num, char identifier)
 {
-	int i = 0, j, rem, start, count = 0;
-	char *ptr2, *ptr = (char *)malloc(3 * sizeof(char));
+	int start, count;
+	char *ptr;
 
 	identifier == 'x' ? (start = 97) : (start = 65);
 	if (num == 0)
-		count += print_char('0');
-	while (num != 0)
-	{
-		rem = num % 16;
-		if (rem < 10)
-		{
-			if (i == 0)
-				*(ptr + i) = rem + '0';
-			else
-			{
-				ptr2 = (char *)realloc(ptr, i + 1);
-				*(ptr2 + i) = rem + '0';
-				ptr = ptr2;
-			}
-		}
-		else
-		{
-			if (i == 0)
-				*(ptr + i) = (rem - 10) + start;
-			else
-			{
-				ptr2 = (char *)realloc(ptr, i + 1);
-				*(ptr2 + i) = (rem - 10) + start;
-				ptr = ptr2;
-			}
-		}
-		i++;
-		num /= 16;
-	}
-	for (j = i; j > 0; j--)
-		count += print_char(ptr[j - 1]);
+		return (print_char('0'));
+	ptr = create_hex(num, start);
+	count = print_string(ptr);
+	free(ptr);
 	return (count);
 }
 
@@ -139,27 +85,13 @@ int print_hex(unsigned int num, char identifier)
  */
 int print_xstring(char *str)
 {
-	char chr;
-	int i = 0, len, count = 0;
+	char *ptr;
+	int count;
 
 	if (str == NULL || strlen(str) == 0)
-		return (count);
-	len = strlen(str);
-	while (i < len)
-	{
-		chr = str[i];
-		if (chr < 32 || chr > 126)
-		{
-			count += print_char(92);
-			count += print_char('x');
-			if (chr < 16)
-				count += print_char('0');
-			count += print_hex((unsigned int)chr, 'X');
-			i++;
-			continue;
-		}
-		count += print_char(str[i]);
-		i++;
-	}
+		return (0);
+	ptr = create_xstring(str);
+	count = print_string(ptr);
+	free(ptr);
 	return (count);
 }
