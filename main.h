@@ -40,6 +40,7 @@ int print_unsigned_int(unsigned long int);
 int print_width(char, char, va_list);
 char *print_width2(char, va_list);
 int print_num(long int);
+void strjn(char **, char *);
 
 /* ========== 5-printf.c =========== */
 

@@ -41,15 +41,15 @@ int print_width(char next_char, char iden, va_list lst)
 			num *= -1;
 		ptr = create_number(num);
 	}
-	if (iden == 'u')
+	else if (iden == 'u')
 		ptr = create_number(va_arg(lst, unsigned int));
-	if (iden == 'o')
+	else if (iden == 'o')
 		ptr = create_octal(va_arg(lst, unsigned int));
 	else
 		ptr = print_width2(iden, lst);
 	len = strlen(ptr);
 	if (num2 < 0)
-		strcat(ptr2, ptr);
+		strjn(&ptr2, ptr);
 	else
 		ptr2 = ptr;
 	if (len > fill)
@@ -62,6 +62,8 @@ int print_width(char next_char, char iden, va_list lst)
 	}
 	if (iden != 's')
 		free(ptr);
+	if (num2 < 0)
+		free(ptr2);
 	return (count);
 }
 
@@ -106,4 +108,28 @@ int print_num(long int number)
 		num = number;
 	count += print_unsigned_int(num);
 	return (count);
+}
+
+/**
+ * strjn - join two pointer strings from the main
+ * Works like strcat function
+ * @str1: first string
+ * @str2: second string
+ */
+void strjn(char **str1, char *str2)
+{
+	char *str, *ptr = *str1;
+	int len1, len2 = strlen(str2);
+	int i;
+
+	if (str2 == NULL || len2 == 0)
+		return;
+	len1 = strlen(ptr);
+	str = (char *)malloc((len1 + len2 + 1) * sizeof(char));
+	for (i = 0; i < len1; i++)
+		str[i] = ptr[i];
+	for (i = 0; i < len2; i++)
+		str[i + len1] = str2[i];
+	str[len1 + len2] = '\0';
+	*str1 = str;
 }
