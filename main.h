@@ -34,6 +34,10 @@ int print_short(int, char);
 bool isiden(char);
 int print_address(void *);
 
+/* ========= 4-printf.c =========== */
+int print_unsigned_int(unsigned long int);
+
+
 /* ======= printf_revstr.c ======= */
 
 int printf_revstr(va_list types);

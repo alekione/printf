@@ -30,39 +30,24 @@ int print_string(char *str)
 
 /**
  * print_num - print numbers
- * @num: number to print
+ * @number: number to print
  * Return: count
  */
-int print_num(long int num)
+int print_num(long int number)
 {
-	int i = 0, len, count = 0;
-	char last, *ptr2, *ptr = (void *)malloc(sizeof(char));
+	unsigned long int num;
+	int count = 0;
 
-	if (num == 0)
+	if (number == 0)
 		return (print_char('0'));
-	if (num < 0)
+	if (number < 0)
 	{
 		count += print_char('-');
-		num = num * -1;
+		num = number * -1;
 	}
-	while (num != 0)
-	{
-		last = (num % 10) + '0';
-		if (i == 0)
-			*(ptr) = last;
-		else
-		{
-			ptr2 = realloc(ptr, i + 1);
-			*(ptr2 + i) = last;
-			ptr = ptr2;
-		}
-		num /= 10;
-		i++;
-	}
-
-	for (len = i; len > 0; len--)
-		count += print_char(ptr[len - 1]);
-	free(ptr);
+	else
+		num = number;
+	count += print_unsigned_int(num);
 	return (count);
 }
 /**
@@ -116,8 +101,8 @@ int _printf(const char *format, ...)
 
 /**
  * continue_printf - continue the other _printf function
- * @nnext_char: conversion specifier
- * @nnext_char - char after next char
+ * @next_char: conversion specifier
+ * @nnext_char: char after next char
  * @lst: argument list
  * Return: sum of char printed
  */
@@ -127,8 +112,10 @@ int continue_printf(char next_char, char nnext_char, va_list lst)
 
 	if (next_char == 'h')
 		count += print_short(va_arg(lst, int), nnext_char);
-	if (next_char == 'l')
+	if (next_char == 'l' && nnext_char != 'u')
 		count += print_long(va_arg(lst, long int), nnext_char);
+	if (next_char == 'l' && nnext_char == 'u')
+		count += print_unsigned_int(va_arg(lst, unsigned long int));
 	if (next_char == 'c')
 		count += print_char(va_arg(lst, int));
 	if (next_char == 's')
