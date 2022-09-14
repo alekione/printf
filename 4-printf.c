@@ -45,10 +45,8 @@ int print_width(char next_char, char iden, va_list lst)
 		ptr = create_number(va_arg(lst, unsigned int));
 	if (iden == 'o')
 		ptr = create_octal(va_arg(lst, unsigned int));
-	if (iden == 'x')
-		ptr = create_hex(va_arg(lst, unsigned int), 'a');
-	if (iden == 'X')
-		ptr = create_hex(va_arg(lst, unsigned int), 'A');
+	else
+		ptr = print_width2(iden, lst);
 	len = strlen(ptr);
 	if (num2 < 0)
 		strcat(ptr2, ptr);
@@ -62,10 +60,31 @@ int print_width(char next_char, char iden, va_list lst)
 			count += print_char(' ');
 		count += print_string(ptr2);
 	}
-	free(ptr);
+	if (iden != 's')
+		free(ptr);
 	return (count);
 }
 
+/**
+ * print_width2 - continues print_width
+ * @iden: character identifier
+ * @lst: va_list arguments
+ * Return: string
+ */
+char *print_width2(char iden, va_list lst)
+{
+	char *ptr;
+
+	if (iden == 'x')
+		ptr = create_hex(va_arg(lst, unsigned int), 'a');
+	if (iden == 'X')
+		ptr = create_hex(va_arg(lst, unsigned int), 'A');
+	if (iden == 's')
+		ptr = va_arg(lst, char *);
+	if (iden == 'c')
+		ptr = str_char(va_arg(lst, int));
+	return (ptr);
+}
 /**
  * print_num - print numbers
  * @number: number to print

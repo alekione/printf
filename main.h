@@ -38,6 +38,7 @@ int print_address(void *);
 /* ========= 4-printf.c =========== */
 int print_unsigned_int(unsigned long int);
 int print_width(char, char, va_list);
+char *print_width2(char, va_list);
 int print_num(long int);
 
 /* ========== 5-printf.c =========== */
@@ -51,6 +52,7 @@ char *create_hex(unsigned int, int);
 /* ======== 6-printf.c ======= */
 
 char *create_xstring(char *);
+char *str_char(char);
 
 /* ======= printf_revstr.c ======= */
 

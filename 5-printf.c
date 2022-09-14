@@ -32,6 +32,12 @@ char *create_binary(unsigned int num)
 	char chr, ptr2[65], ptr[65];
 	int i = 0, j = 0, ind = 0;
 
+	if (num == 0)
+	{
+		ptr[0] = '0';
+		ptr[1] = '\0';
+		return (_strdup(ptr));
+	}
 	while (num > 0)
 	{
 		chr = (num % 2) + '0';
@@ -56,6 +62,12 @@ char *create_octal(unsigned int num)
 	int i = 0, j, ind = 0, rem;
 	char ptr2[70], ptr[70];
 
+	if (num == 0)
+	{
+		ptr[0] = '0';
+		ptr[1] = '\0';
+		return (_strdup(ptr));
+	}
 	while (num != 0)
 	{
 		rem = num % 8;
@@ -80,6 +92,12 @@ char *create_number(unsigned long int num)
 	int i = 0, j, ind = 0;
 	char last, ptr2[30], ptr[30];
 
+	if (num == 0)
+	{
+		ptr[0] = '0';
+		ptr[1] = '\0';
+		return (_strdup(ptr));
+	}
 	while (num != 0)
 	{
 		last = (num % 10) + '0';
@@ -105,6 +123,12 @@ char *create_hex(unsigned int num, int start)
 	int i = 0, j, rem, ind;
 	char ptr2[65], ptr[65];
 
+	if (num == 0)
+	{
+		ptr[0] = '0';
+		ptr[1] = '\0';
+		return (_strdup(ptr));
+	}
 	while (num != 0)
 	{
 		rem = num % 16;

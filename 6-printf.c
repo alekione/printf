@@ -36,3 +36,17 @@ char *create_xstring(char *str)
 	ptr[ind++] = '\0';
 	return (ptr);
 }
+
+/**
+ * str_char - converts a character into  a string
+ * @chr: character passed;
+ * Return: a string character
+ */
+char *str_char(char chr)
+{
+	char *ptr = malloc(2 * sizeof(char));
+
+	ptr[0] = chr;
+	ptr[1] = '\0';
+	return (ptr);
+}
