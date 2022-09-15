@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-/* ========= printf.c ============ */
+/* =========1- printf.c ============ */
 
 int print_char(char);
 int print_string(char *);
@@ -36,9 +36,10 @@ bool isiden(char);
 int print_address(void *);
 
 /* ========= 4-printf.c =========== */
+
+bool iscustom(char);
 int print_unsigned_int(unsigned long int);
 int print_width(char, char, va_list);
-char *print_width2(char, va_list);
 int print_num(long int);
 void strjn(char **, char *);
 
@@ -53,14 +54,15 @@ char *create_hex(unsigned int, int);
 /* ======== 6-printf.c ======= */
 
 char *create_xstring(char *);
+char *create_width(char, char, va_list);
+char *create_width2(char, va_list);
 char *str_char(char);
 
-/* ======= printf_revstr.c ======= */
+/* ======= 7-printf.c ======= */
 
-int printf_revstr(va_list types);
-
-/* ======= printf_rot12.c ====== */
-
-int printf_rot13(va_list);
+int print_revstr(va_list types);
+int print_rot13(va_list);
+int print_custom(char, char, char, va_list);
+char *create_custom(char, char, char, va_list);
 
 #endif

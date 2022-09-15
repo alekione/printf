@@ -48,6 +48,13 @@ int _printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			next_char = format[i + 1];
+			if (iscustom(next_char))
+			{
+				count += print_custom(next_char, format[i + 2], format[i + 3], lst);
+				i =+ 2;
+				if (isdigit(format[i + 2]))
+					i++;
+			}
 			if (isdigit(next_char) || next_char == '*')
 				count += print_width(next_char, format[i + 2], lst);
 			else
@@ -130,9 +137,9 @@ int continue_printf2(char next_char, va_list lst)
 	if (next_char == 'S')
 		count += print_xstring(va_arg(lst, char *));
 	if (next_char == 'R')
-		count += printf_rot13(lst);
+		count += print_rot13(lst);
 	if (next_char == 'r')
-		count += printf_revstr(lst);
+		count += print_revstr(lst);
 	if (next_char == 'p')
 		count += print_address(va_arg(lst, void *));
 	return (count);

@@ -6,7 +6,7 @@
  *
  * Return: counter.
  */
-int printf_rot13(va_list args)
+int print_rot13(va_list args)
 {
 	int l, m, n, count = 0, slen, alen;
 
@@ -32,6 +32,32 @@ int printf_rot13(va_list args)
 		}
 		if (n == 0)
 			count += print_char(s[l]);
+	}
+	return (count);
+}
+
+/**
+ * printf_revstr - function that print a string in reverse
+ * @types: Lista of arguments
+ *
+ * Return: number of char printed
+ */
+int print_revstr(va_list types)
+{
+	char *str;
+	int i, len, count = 0;
+
+	str = va_arg(types, char *);
+
+	if (str == NULL || strlen(str) == 0)
+	{
+		return (0);
+	}
+
+	len = strlen(str);
+	for (i = len - 1; i >= 0; i--)
+	{
+		count += print_char(str[i]);
 	}
 	return (count);
 }

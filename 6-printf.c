@@ -38,6 +38,77 @@ char *create_xstring(char *str)
 }
 
 /**
+ * create_width - creates a string with a given width
+ * @next_char: width size
+ * @iden: char identifier
+ * @lst: va_list arguments
+ * Return: str with the given width
+ */
+char *create_width(char next_char, char iden, va_list lst)
+{
+	char *str, *ptr, *ptr2 = "-";
+	int i, num, num2, len, fill;
+
+	if (next_char == '*')
+		fill = va_arg(lst, int);
+	else
+		fill = next_char - '0';
+	if (iden == 'd' || iden == 'i')
+	{
+		num = num2 = va_arg(lst, int);
+		if (num < 0)
+			num *= -1;
+		ptr = create_number(num);
+	}
+	else if (iden == 'u')
+		ptr = create_number(va_arg(lst, unsigned int));
+	else if (iden == 'o')
+		ptr = create_octal(va_arg(lst, unsigned int));
+	else
+		ptr = create_width2(iden, lst);
+	len = strlen(ptr);
+	if (num2 < 0)
+		strjn(&ptr2, ptr);
+	else
+		ptr2 = strdup(ptr);
+	if (iden != 's')
+		free(ptr);
+	if (len > fill)
+		return (ptr2);
+	else
+	{
+		str = malloc((fill - len + 1) * sizeof(char));
+		for (i = 0; i < fill - len; i++)
+			str[i] = ' ';
+		str[i] = '\0';
+		strjn(&str, ptr2);
+	}
+	free(ptr2);
+	return (str);
+}
+
+/**
+ * create_width2 - continues create_width
+ * @iden: character identifier
+ * @lst: va_list arguments
+ * Return: string
+ */
+char *create_width2(char iden, va_list lst)
+{
+	char *ptr;
+
+	if (iden == 'x')
+		ptr = create_hex(va_arg(lst, unsigned int), 'a');
+	if (iden == 'X')
+		ptr = create_hex(va_arg(lst, unsigned int), 'A');
+	if (iden == 's')
+		ptr = va_arg(lst, char *);
+	if (iden == 'c')
+		ptr = str_char(va_arg(lst, int));
+	return (ptr);
+}
+
+/**
  * str_char - converts a character into  a string
  * @chr: character passed;
  * Return: a string character
