@@ -63,6 +63,11 @@ char *str_char(char);
 int print_revstr(va_list types);
 int print_rot13(va_list);
 int print_custom(char, char, char, va_list);
-char *create_custom(char, char, char, va_list);
+
+/* ======= 8-printf.c ======= */
+
+char *print_with_dot(char, char, va_list);
+char *print_with_dash(char, char, va_list);
+char *print_with_zero(char, char, va_list);
 
 #endif

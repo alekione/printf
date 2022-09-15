@@ -61,3 +61,38 @@ int print_revstr(va_list types)
 	}
 	return (count);
 }
+
+/**
+ * print_custom - prints a string with custom modifiers
+ * @next_char: custom modifier
+ * @nnext_char: length modifier/ specifier
+ * @n_nnext_char:  specifier or none
+ * @lst: va_list arguments
+ * Return: count of printed characters
+ */
+int print_custom(char next_char, char nnext_char, char n_nnext_char,
+		va_list lst)
+{
+	char *ptr = NULL, iden, length;
+	int count;
+
+	if (nnext_char != '*' && !(isdigit(nnext_char)))
+	{
+		iden = nnext_char;
+		length = '0';
+	}
+	else
+	{
+		length = nnext_char;
+		iden = n_nnext_char;
+	}
+	if (next_char == '.')
+		ptr = print_with_dot(length, iden, lst);
+	if (next_char == '-')
+		ptr = print_with_dash(length, iden, lst);
+	if (next_char == '0')
+		ptr = print_with_zero(length, iden, lst);
+	count = print_string(ptr);
+	free(ptr);
+	return (count);
+}

@@ -51,7 +51,7 @@ int _printf(const char *format, ...)
 			if (iscustom(next_char))
 			{
 				count += print_custom(next_char, format[i + 2], format[i + 3], lst);
-				i =+ 2;
+				i += 2;
 				if (isdigit(format[i + 2]))
 					i++;
 			}

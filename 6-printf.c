@@ -68,13 +68,14 @@ char *create_width(char next_char, char iden, va_list lst)
 		ptr = create_width2(iden, lst);
 	len = strlen(ptr);
 	if (num2 < 0)
+	{
 		strjn(&ptr2, ptr);
-	else
-		ptr2 = strdup(ptr);
-	if (iden != 's')
 		free(ptr);
-	if (len > fill)
-		return (ptr2);
+		ptr = _strdup(ptr2);
+		free(ptr2);
+	}
+	if (len > fill || fill == 0)
+		return (ptr);
 	else
 	{
 		str = malloc((fill - len + 1) * sizeof(char));
@@ -83,7 +84,8 @@ char *create_width(char next_char, char iden, va_list lst)
 		str[i] = '\0';
 		strjn(&str, ptr2);
 	}
-	free(ptr2);
+	printf("almost\n");
+	free(ptr);
 	return (str);
 }
 
