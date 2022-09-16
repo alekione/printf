@@ -65,22 +65,33 @@ char *print_with_dash(char length, char iden, va_list lst)
  * @length: length for formatting
  * @iden: character identifier
  * @lst: va_list arguments
- * Return: a formatted string
+ * Return: number of printd characters
  */
-char *print_with_zero(char length, char iden, va_list lst)
+int print_with_zero(char length, char iden, va_list lst)
 {
 	char *ptr;
-	int i, len;
+	int i, j, len, count = 0;
 
 	ptr = create_width(length, iden, lst);
 	len = strlen(ptr);
 	if (length == '0' || len > length - '0')
-		return (ptr);
-	for (i = 0; i < len; i++)
 	{
-		if (ptr[i] != ' ')
-			break;
-		ptr[i] = '0';
+		for (i = 0; i < len; i++)
+			count += print_char(ptr[i]);
 	}
-	return (ptr);
+	else
+	{
+		for (i = 0; i < len; i++)
+		{
+			if (ptr[i] != ' ')
+			{
+				for (j = i; j < len; j++)
+					count += print_char(ptr[j]);
+				break;
+			}
+			count += print_char('0');
+		}
+	}
+	free(ptr);
+	return (count);
 }

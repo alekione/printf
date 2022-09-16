@@ -68,6 +68,6 @@ int print_custom(char, char, char, va_list);
 
 char *print_with_dot(char, char, va_list);
 char *print_with_dash(char, char, va_list);
-char *print_with_zero(char, char, va_list);
+int print_with_zero(char, char, va_list);
 
 #endif

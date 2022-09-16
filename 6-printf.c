@@ -76,15 +76,11 @@ char *create_width(char next_char, char iden, va_list lst)
 	}
 	if (len > fill || fill == 0)
 		return (ptr);
-	else
-	{
-		str = malloc((fill - len + 1) * sizeof(char));
-		for (i = 0; i < fill - len; i++)
-			str[i] = ' ';
-		str[i] = '\0';
-		strjn(&str, ptr2);
-	}
-	printf("almost\n");
+	str = malloc((fill - len + 1) * sizeof(char));
+	for (i = 0; i < fill - len; i++)
+		str[i] = ' ';
+	str[i] = '\0';
+	strjn(&str, ptr2);
 	free(ptr);
 	return (str);
 }

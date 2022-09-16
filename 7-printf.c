@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * printf_rot13 - print string to rot13
+ * print_rot13 - print string to rot13
  * @args: type struct
  *
  * Return: counter.
@@ -37,7 +37,7 @@ int print_rot13(va_list args)
 }
 
 /**
- * printf_revstr - function that print a string in reverse
+ * print_revstr - function that print a string in reverse
  * @types: Lista of arguments
  *
  * Return: number of char printed
@@ -91,7 +91,7 @@ int print_custom(char next_char, char nnext_char, char n_nnext_char,
 	if (next_char == '-')
 		ptr = print_with_dash(length, iden, lst);
 	if (next_char == '0')
-		ptr = print_with_zero(length, iden, lst);
+		return (print_with_zero(length, iden, lst));
 	count = print_string(ptr);
 	free(ptr);
 	return (count);

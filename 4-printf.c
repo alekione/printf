@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ * iscustom - checks whether a character is custom specifier
+ * @chr: character to check
+ * Return: true or false
+ */
 bool iscustom(char chr)
 {
 	if (chr == '-' || chr == '0' || chr == '.')
@@ -29,6 +34,7 @@ int print_unsigned_int(unsigned long int num)
  * @next_char: widyh size
  * @iden: char identifier
  * @lst: va_lst arguments
+ * Return: count of characters printed
  */
 int print_width(char next_char, char iden, va_list lst)
 {

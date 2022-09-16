@@ -49,21 +49,17 @@ int _printf(const char *format, ...)
 		{
 			next_char = format[i + 1];
 			if (iscustom(next_char))
-			{
 				count += print_custom(next_char, format[i + 2], format[i + 3], lst);
-				i += 2;
-				if (isdigit(format[i + 2]))
-					i++;
-			}
-			if (isdigit(next_char) || next_char == '*')
+			if ((isdigit(next_char) && !(isdigit(format[i + 2]))) || next_char == '*')
 				count += print_width(next_char, format[i + 2], lst);
 			else
 				count += continue_printf(next_char, format[i + 2], format[i + 3], lst);
-			if ((next_char == '+' || next_char == ' ') && isiden(format[i + 2]))
+			if (((next_char == '+' || next_char == ' ') && isiden(format[i + 2])) ||
+					iscustom(next_char))
 				i++;
 			if (next_char == '+' || next_char == '#' || next_char == ' ' ||
 				next_char == 'l' || next_char == 'h' || isdigit(next_char) ||
-				next_char == '*')
+				next_char == '*' || isdigit(format[i + 2]))
 				i++;
 			i += 2;
 			continue;
