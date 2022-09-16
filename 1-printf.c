@@ -55,11 +55,11 @@ int _printf(const char *format, ...)
 			else
 				count += continue_printf(next_char, format[i + 2], format[i + 3], lst);
 			if (((next_char == '+' || next_char == ' ') && isiden(format[i + 2])) ||
-					iscustom(next_char))
+					isdigit(format[i + 2]))
 				i++;
 			if (next_char == '+' || next_char == '#' || next_char == ' ' ||
 				next_char == 'l' || next_char == 'h' || isdigit(next_char) ||
-				next_char == '*' || isdigit(format[i + 2]))
+				next_char == '*' || iscustom(next_char))
 				i++;
 			i += 2;
 			continue;
